@@ -1,0 +1,75 @@
+<div class="modal-overlay" id="addWarrantyModal" role="dialog" aria-modal="true" aria-labelledby="addWarrantyModalTitle">
+    <div class="modal-dialog panel-box">
+        <div class="modal-header">
+            <h3 class="modal-title" id="addWarrantyModalTitle">ADD WARRANTY</h3>
+            <button type="button" class="modal-close-btn" id="closeAddWarrantyModal" aria-label="Close modal">&times;</button>
+        </div>
+
+        <form id="addWarrantyForm" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+
+            <div id="addWarrantyErrorAlert" class="alert-banner alert-banner-danger" style="display: none;" role="alert">
+                <span class="alert-banner-content" id="addWarrantyErrorMessage"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="productNameInput">PRODUCT NAME *</label>
+                <input type="text" id="productNameInput" name="ProductName" class="form-control" maxlength="100" required placeholder="e.g. MacBook Pro M3" />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="expirationDateInput">EXPIRATION DATE *</label>
+                <input type="date" id="expirationDateInput" name="ExpirationDate" class="form-control" required />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">DOCUMENT OR RECEIPT *</label>
+                
+                <input type="file" id="fileUploadInput" name="File" accept=".jpg,.jpeg,.png,.pdf" style="display: none;" required />
+
+                <div class="drop-zone" id="dropZone">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="17 8 12 3 7 8"/>
+                        <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                    <div class="drop-zone-text">DROP FILE OR CLICK TO BROWSE</div>
+                    <div class="drop-zone-subtext">JPEG, PNG or PDF &middot; max 10 MB</div>
+                </div>
+
+                <div class="file-preview-area" id="filePreviewArea">
+                    <div class="file-preview-card">
+                        <img id="imageThumbnail" class="preview-thumbnail" src="" alt="Document preview" style="display: none;" />
+                        <div id="pdfIconWrap" style="display: none;">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                                <line x1="16" y1="13" x2="8" y2="13"/>
+                                <line x1="16" y1="17" x2="8" y2="17"/>
+                                <polyline points="10 9 9 9 8 9"/>
+                            </svg>
+                        </div>
+                        <div class="preview-info">
+                            <div class="preview-filename" id="previewFileName">filename.pdf</div>
+                            <div class="preview-filesize" id="previewFileSize">1.2 MB</div>
+                        </div>
+                        <button type="button" class="btn btn-sm" id="btnRemoveFile">REMOVE</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upload Progress -->
+            <div class="upload-progress-wrap" id="uploadProgressWrap">
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" id="progressBarFill"></div>
+                </div>
+                <div class="progress-text" id="progressStatusText">UPLOADING… 0%</div>
+            </div>
+
+            <div style="display: flex; gap: 12px; margin-top: 24px;">
+                <button type="button" class="btn" style="flex: 1;" id="btnCancelAddWarranty">CANCEL</button>
+                <button type="submit" class="btn btn-primary" style="flex: 1;" id="btnSubmitAddWarranty" disabled>SAVE WARRANTY</button>
+            </div>
+        </form>
+    </div>
+</div>

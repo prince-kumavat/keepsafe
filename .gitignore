@@ -1,0 +1,61 @@
+
+# Build output
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa]rtifacts/
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Code
+.vscode/
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
+# .NET generated files
+project.lock.json
+project.fragment.lock.json
+artifacts/
+TestResults/
+coverage/
+coverage.*
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+
+# Logs
+*.log
+logs/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+secrets.json
+appsettings.*.local.json
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Publish output
+publish/
+wwwroot/dist/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak

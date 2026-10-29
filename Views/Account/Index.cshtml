@@ -1,0 +1,139 @@
+@model KeepSafe.Models.AuthPageViewModel
+@{
+    ViewData["Title"] = "Welcome";
+}
+
+<div class="auth-wrapper">
+    <!-- Brand / Hero Side -->
+    <div class="auth-brand-side">
+        <div class="auth-brand-pattern"></div>
+        <div class="brand-top" style="z-index: 1;">
+            <h1>
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    <path d="M9 12l2 2 4-4"/>
+                </svg>
+                KEEPSAFE
+            </h1>
+            <p class="brand-tagline">Store. Track. Never lose a warranty.</p>
+        </div>
+
+        <div class="auth-illustration-wrap">
+            <svg class="auth-svg-hero" viewBox="0 0 160 160" fill="none">
+                <!-- Neo-Brutalist Geometric Shield & Document Illustration -->
+                <rect x="10" y="10" width="140" height="140" fill="#000000" stroke="#FFFFFF" stroke-width="3"/>
+                <rect x="25" y="25" width="110" height="110" fill="#000000" stroke="#FFFFFF" stroke-width="2" stroke-dasharray="4 4"/>
+                
+                <polygon points="80,35 125,55 125,95 80,125 35,95 35,55" fill="#000000" stroke="#FFFFFF" stroke-width="3"/>
+                <rect x="58" y="60" width="44" height="52" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="2"/>
+                <line x1="66" y1="72" x2="94" y2="72" stroke="#000000" stroke-width="3"/>
+                <line x1="66" y1="84" x2="94" y2="84" stroke="#000000" stroke-width="3"/>
+                <line x1="66" y1="96" x2="84" y2="96" stroke="#000000" stroke-width="3"/>
+            </svg>
+        </div>
+
+        <div class="auth-brand-footer">
+            <span>&copy; @DateTime.UtcNow.Year KEEPSAFE &middot; ALL RIGHTS RESERVED</span>
+        </div>
+    </div>
+
+    <!-- Form Side -->
+    <div class="auth-form-side">
+        <div class="auth-card panel-box">
+            <h2>Welcome to KeepSafe</h2>
+            <p class="subtext">Your warranties, safe in one place</p>
+
+            @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+            {
+                <div class="alert-banner alert-banner-danger" role="alert">
+                    <span class="alert-banner-content">@Model.ErrorMessage</span>
+                </div>
+            }
+
+            <div class="auth-tabs" role="tablist">
+                <button type="button" class="auth-tab-btn @(Model.ActiveTab == "login" ? "active" : "")" id="tabLoginBtn" role="tab" aria-selected="@(Model.ActiveTab == "login" ? "true" : "false")">LOG IN</button>
+                <button type="button" class="auth-tab-btn @(Model.ActiveTab == "signup" ? "active" : "")" id="tabSignupBtn" role="tab" aria-selected="@(Model.ActiveTab == "signup" ? "true" : "false")">CREATE ACCOUNT</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" method="post" asp-action="Login" asp-controller="Account" style="@(Model.ActiveTab == "login" ? "" : "display:none;")">
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <label class="form-label" for="loginEmail">EMAIL ADDRESS</label>
+                    <div class="input-container">
+                        <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                            <polyline points="22,6 12,13 2,6"/>
+                        </svg>
+                        <input type="email" id="loginEmail" name="Email" class="form-control" value="@Model.Login.Email" required placeholder="name@domain.com" autocomplete="email" />
+                    </div>
+                    <span asp-validation-for="Login.Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="loginPassword">PASSWORD</label>
+                    <div class="input-container">
+                        <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                        <input type="password" id="loginPassword" name="Password" class="form-control" required placeholder="••••••••" autocomplete="current-password" />
+                        <button type="button" class="btn-toggle-pw" aria-label="Toggle password visibility">
+                            <svg class="pw-eye" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <span asp-validation-for="Login.Password" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block submit-btn" id="btnLoginSubmit">
+                    CONTINUE &rarr;
+                </button>
+            </form>
+
+            <!-- Signup Form -->
+            <form id="signupForm" method="post" asp-action="Signup" asp-controller="Account" style="@(Model.ActiveTab == "signup" ? "" : "display:none;")">
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <label class="form-label" for="signupEmail">EMAIL ADDRESS</label>
+                    <div class="input-container">
+                        <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                            <polyline points="22,6 12,13 2,6"/>
+                        </svg>
+                        <input type="email" id="signupEmail" name="Email" class="form-control" value="@Model.Signup.Email" required placeholder="name@domain.com" autocomplete="email" />
+                    </div>
+                    <span asp-validation-for="Signup.Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="signupPassword">PASSWORD (MIN 6 CHARS)</label>
+                    <div class="input-container">
+                        <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                        <input type="password" id="signupPassword" name="Password" class="form-control" required minlength="6" placeholder="••••••••" autocomplete="new-password" />
+                        <button type="button" class="btn-toggle-pw" aria-label="Toggle password visibility">
+                            <svg class="pw-eye" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <span asp-validation-for="Signup.Password" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block submit-btn" id="btnSignupSubmit">
+                    CONTINUE &rarr;
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/auth.js" asp-append-version="true"></script>
+}
